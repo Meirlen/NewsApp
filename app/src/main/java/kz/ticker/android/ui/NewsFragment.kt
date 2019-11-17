@@ -15,6 +15,7 @@ import kz.ticker.android.base.Constant.START_PAGE
 import kz.ticker.android.vo.Status
 import kz.ticker.android.ext.*
 import kz.ticker.android.ui.news.NewsAdapter
+import kz.ticker.android.utils.CustomDialog
 import kz.ticker.android.utils.PaginationScrollListener
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,6 +30,7 @@ class NewsFragment : androidx.fragment.app.Fragment() {
     }
 
     private val mViewModel: NewsViewModel by viewModel()
+    private lateinit var errorDialog: CustomDialog
     private lateinit var newsAdapter: NewsAdapter
     private var articleList = mutableListOf<Article>()
     private var isLastPage: Boolean = false
@@ -46,18 +48,23 @@ class NewsFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setObservers()
+        setUpObservers()
         setUpRecyclerView()
+        setUpDialog()
+    }
+
+    private fun setUpDialog() {
+        errorDialog = CustomDialog(context!!) {
+            loadData(currentPage)
+        }
     }
 
 
     private fun setUpRecyclerView() {
-
         newsAdapter = NewsAdapter(articleList)
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = newsAdapter
-
         addScrollListener(layoutManager)
     }
 
@@ -98,7 +105,7 @@ class NewsFragment : androidx.fragment.app.Fragment() {
      * @see NewsViewModel
      */
 
-    private fun setObservers() {
+    private fun setUpObservers() {
 
         mViewModel.articleLiveData.observe(this, Observer {
             when (it?.status) {
@@ -125,7 +132,7 @@ class NewsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun showResult(list: List<Article>) {
-        if (list.isEmpty()){
+        if (list.isEmpty()) {
             newsAdapter.hideLoading()
         }
         articleList.addAll(list)
@@ -136,11 +143,19 @@ class NewsFragment : androidx.fragment.app.Fragment() {
     private fun showError(throwable: Throwable) {
         handleError(throwable) { title, desc ->
             showError(title + desc)
+            showErrorDialog()
         }
     }
 
     private fun showError(error: String) {
         snacbar(root_layout, error)
+        showErrorDialog()
+    }
+
+    private fun showErrorDialog() {
+        if (articleList.isEmpty()) {
+            errorDialog.show()
+        }
     }
 
 
