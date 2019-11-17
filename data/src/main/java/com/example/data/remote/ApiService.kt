@@ -10,8 +10,12 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @GET("/v2/top-headlines?country=us&pageSize=20&page=1&apiKey=d4c4edff327c4fce883a5364f8b20f82")
-    fun getArticles(): Single<Response<NewsResponse>>
-
+    @GET("/v2/top-headlines")
+    fun getArticles(
+        @Query("country") country: String,
+        @Query("pageSize") pageSize: String,
+        @Query("page") page: Int,
+        @Query("apiKey") apiKey: String
+    ): Single<Response<NewsResponse>>
 
 }

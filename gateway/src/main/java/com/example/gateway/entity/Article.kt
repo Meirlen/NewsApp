@@ -15,4 +15,7 @@ data class Article(
     val url: String?,
     val urlToImage: String?
 
-) : Parcelable
+) : Parcelable {
+
+    fun empty() = Article(null, null, null, null, null, null, null, null)
+}

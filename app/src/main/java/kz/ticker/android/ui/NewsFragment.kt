@@ -5,22 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.data.exception.handleError
 import com.example.gateway.entity.Article
-import kotlinx.android.synthetic.main.fragment_ticket.*
+import kotlinx.android.synthetic.main.fragment_news.*
 import kz.ticker.android.R
-import kz.ticker.android.base.OnItemClickListener
+import kz.ticker.android.base.Constant.LAST_PAGE
+import kz.ticker.android.base.Constant.START_PAGE
 import kz.ticker.android.vo.Status
 import kz.ticker.android.ext.*
-import kz.ticker.android.router.MainRouter
 import kz.ticker.android.ui.news.NewsAdapter
-import kz.ticker.android.utils.NetworkHandler
+import kz.ticker.android.utils.PaginationScrollListener
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.android.ext.android.inject
 
 
-class NewsFragment : androidx.fragment.app.Fragment(),
-    androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
+class NewsFragment : androidx.fragment.app.Fragment() {
 
 
     companion object {
@@ -31,9 +30,10 @@ class NewsFragment : androidx.fragment.app.Fragment(),
 
     private val mViewModel: NewsViewModel by viewModel()
     private lateinit var newsAdapter: NewsAdapter
-    private var dataList = mutableListOf<Article>()
-    private val router by inject<MainRouter>()
-    private val networkHandler by inject<NetworkHandler>()
+    private var articleList = mutableListOf<Article>()
+    private var isLastPage: Boolean = false
+    private var isLoading: Boolean = false
+    private var currentPage = START_PAGE
 
 
     override fun onCreateView(
@@ -41,39 +41,56 @@ class NewsFragment : androidx.fragment.app.Fragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_ticket, container, false)
+        return inflater.inflate(R.layout.fragment_news, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
         setUpRecyclerView()
-        setListeners()
-        loadData()
     }
 
 
     private fun setUpRecyclerView() {
-        newsAdapter = NewsAdapter(dataList, object : OnItemClickListener {
-            override fun onItemClicked(position: Int) {
-                router.openDetail(context, dataList[position])
+
+        newsAdapter = NewsAdapter(articleList)
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = newsAdapter
+
+        addScrollListener(layoutManager)
+    }
+
+
+    private fun addScrollListener(layoutManager: LinearLayoutManager) {
+        recyclerView?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                loadData(currentPage)
+                currentPage++
+
             }
         })
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-        recyclerView.adapter = newsAdapter
     }
 
-
-    private fun loadData() {
-        if (!networkHandler.isConnected) {
-            showError(getString(R.string.no_internet_connect_error_message))
+    /**
+     * load data from remote
+     */
+    private fun loadData(page: Int) {
+        if (currentPage > LAST_PAGE) {
+            showError(getString(R.string.last_page_error_text))
+            newsAdapter.hideLoading()
             return
         }
-        mViewModel.getCurrencies()
-    }
-
-    private fun setListeners() {
-        swipeRefreshLayout.setOnRefreshListener(this)
+        mViewModel.getArticles(page)
     }
 
     /**
@@ -83,7 +100,6 @@ class NewsFragment : androidx.fragment.app.Fragment(),
 
     private fun setObservers() {
 
-
         mViewModel.articleLiveData.observe(this, Observer {
             when (it?.status) {
                 Status.LOADING -> {
@@ -91,7 +107,8 @@ class NewsFragment : androidx.fragment.app.Fragment(),
                 }
                 Status.SUCCESS -> {
                     it.data?.let {
-                        showCurrencyList(it)
+                        showResult(it)
+                        isLoading = false
                     }
                     hideProgress()
 
@@ -107,9 +124,11 @@ class NewsFragment : androidx.fragment.app.Fragment(),
 
     }
 
-    private fun showCurrencyList(list: List<Article>) {
-        dataList.clear()
-        dataList.addAll(list)
+    private fun showResult(list: List<Article>) {
+        if (list.isEmpty()){
+            newsAdapter.hideLoading()
+        }
+        articleList.addAll(list)
         newsAdapter.notifyDataSetChanged()
     }
 
@@ -118,23 +137,18 @@ class NewsFragment : androidx.fragment.app.Fragment(),
         handleError(throwable) { title, desc ->
             showError(title + desc)
         }
-
     }
 
     private fun showError(error: String) {
         snacbar(root_layout, error)
     }
 
-    override fun onRefresh() {
-        loadData()
-    }
 
     private fun hideProgress() {
-        swipeRefreshLayout.isRefreshing = false
+        progressBar.hide()
     }
 
     private fun showProgress() {
-        swipeRefreshLayout.isRefreshing = true
-
+        progressBar.show()
     }
 }

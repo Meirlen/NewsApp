@@ -11,32 +11,32 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class GetCurrenciesUseCaseTest {
+public class GetAriclesUseCaseTest {
 
-    private GetCurrenciesUseCase getCurrenciesUseCase;
+    private GetAriclesUseCase getAriclesUseCase;
 
     @Mock
     private TickerRepository tickerRepository;
 
     @Before
     public void setUp() throws Exception {
-        getCurrenciesUseCase = new GetCurrenciesUseCase(tickerRepository);
+        getAriclesUseCase = new GetAriclesUseCase(tickerRepository);
     }
 
     @Test
     public void shouldDelegateCallToRepositoryFromRemote() {
-        GetCurrenciesUseCase.Params params = new GetCurrenciesUseCase.Params();
+        GetAriclesUseCase.Params params = new GetAriclesUseCase.Params();
         params.setFromRemote(true);
-        getCurrenciesUseCase.buildUseCaseSingle(params);
+        getAriclesUseCase.buildUseCaseSingle(params);
         Mockito.verify(tickerRepository).getArticles();
 
     }
 
     @Test
     public void shouldDelegateCallToRepositoryFromLocal() {
-        GetCurrenciesUseCase.Params params = new GetCurrenciesUseCase.Params();
+        GetAriclesUseCase.Params params = new GetAriclesUseCase.Params();
         params.setFromRemote(false);
-        getCurrenciesUseCase.buildUseCaseSingle(params);
+        getAriclesUseCase.buildUseCaseSingle(params);
         Mockito.verify(tickerRepository).getCurrenciesFromDb();
 
     }

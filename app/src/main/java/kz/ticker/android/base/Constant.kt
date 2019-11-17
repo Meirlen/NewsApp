@@ -24,6 +24,14 @@ object Constant {
 
     const val DEFAULT_PER_PAGE_COUNT = "20"
 
+    const val DEFAULT_COUNTRY = "us"
+
+    const val DEFAULT_API_KEY = "d4c4edff327c4fce883a5364f8b20f82"
+
+    const val START_PAGE = 1
+
+    const val LAST_PAGE = 3
+
 
     const val PLACEHOLDER_IMG_URL = "http://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder-350x350.png"
 
