@@ -28,7 +28,7 @@ public class GetCurrenciesUseCaseTest {
         GetCurrenciesUseCase.Params params = new GetCurrenciesUseCase.Params();
         params.setFromRemote(true);
         getCurrenciesUseCase.buildUseCaseSingle(params);
-        Mockito.verify(tickerRepository).getCurrenciesFromRemote();
+        Mockito.verify(tickerRepository).getArticles();
 
     }
 

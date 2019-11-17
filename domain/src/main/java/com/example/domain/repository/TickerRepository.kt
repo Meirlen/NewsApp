@@ -3,6 +3,6 @@ import com.example.gateway.entity.*
 import io.reactivex.Single
 
 interface TickerRepository {
-    fun getCurrenciesFromRemote(): Single<List<Currency>>
+    fun getArticles(): Single<List<Article>>
 
 }

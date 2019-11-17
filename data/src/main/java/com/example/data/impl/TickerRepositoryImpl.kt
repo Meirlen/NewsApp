@@ -10,9 +10,6 @@ class TickerRepositoryImpl(
     private val api: ApiService
 ) : TickerRepository {
 
-
-
-    override fun getCurrenciesFromRemote(): Single<List<Currency>> = request(api.getCurrencies())
-
+    override fun getArticles(): Single<List<Article>> = request(api.getArticles()).map { it.articles }
 
 }

@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kz.ticker.android.ext.*
-import kz.ticker.android.ui.TicketFragment
+import kz.ticker.android.ui.NewsFragment
 
 
 class HomeActivity : AppCompatActivity() {
@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun switchFragment() {
         supportFragmentManager.replaceOnce(R.id.frame_container, HOME.toString(), {
-            TicketFragment.newInstance()
+            NewsFragment.newInstance()
 
         }).commit()
     }

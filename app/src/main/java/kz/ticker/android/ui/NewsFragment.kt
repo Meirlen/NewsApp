@@ -6,32 +6,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.data.exception.handleError
-import com.example.gateway.entity.Currency
+import com.example.gateway.entity.Article
 import kotlinx.android.synthetic.main.fragment_ticket.*
 import kz.ticker.android.R
 import kz.ticker.android.base.OnItemClickListener
 import kz.ticker.android.vo.Status
 import kz.ticker.android.ext.*
 import kz.ticker.android.router.MainRouter
-import kz.ticker.android.ui.ticket.TickerAdapter
+import kz.ticker.android.ui.news.NewsAdapter
 import kz.ticker.android.utils.NetworkHandler
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.android.ext.android.inject
 
 
-class TicketFragment : androidx.fragment.app.Fragment(),
+class NewsFragment : androidx.fragment.app.Fragment(),
     androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener {
 
 
     companion object {
-        fun newInstance(): TicketFragment {
-            return TicketFragment()
+        fun newInstance(): NewsFragment {
+            return NewsFragment()
         }
     }
 
-    private val mViewModel: TicketViewModel by viewModel()
-    private lateinit var tickerAdapter: TickerAdapter
-    private var dataList = mutableListOf<Currency>()
+    private val mViewModel: NewsViewModel by viewModel()
+    private lateinit var newsAdapter: NewsAdapter
+    private var dataList = mutableListOf<Article>()
     private val router by inject<MainRouter>()
     private val networkHandler by inject<NetworkHandler>()
 
@@ -54,13 +54,13 @@ class TicketFragment : androidx.fragment.app.Fragment(),
 
 
     private fun setUpRecyclerView() {
-        tickerAdapter = TickerAdapter(dataList, object : OnItemClickListener {
+        newsAdapter = NewsAdapter(dataList, object : OnItemClickListener {
             override fun onItemClicked(position: Int) {
-                router.openCurrency(context, dataList[position])
+                router.openDetail(context, dataList[position])
             }
         })
         recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
-        recyclerView.adapter = tickerAdapter
+        recyclerView.adapter = newsAdapter
     }
 
 
@@ -78,13 +78,13 @@ class TicketFragment : androidx.fragment.app.Fragment(),
 
     /**
      * Подписка на LiveData
-     * @see TicketViewModel
+     * @see NewsViewModel
      */
 
     private fun setObservers() {
 
 
-        mViewModel.currencyLiveData.observe(this, Observer {
+        mViewModel.articleLiveData.observe(this, Observer {
             when (it?.status) {
                 Status.LOADING -> {
                     showProgress()
@@ -107,10 +107,10 @@ class TicketFragment : androidx.fragment.app.Fragment(),
 
     }
 
-    private fun showCurrencyList(list: List<Currency>) {
+    private fun showCurrencyList(list: List<Article>) {
         dataList.clear()
         dataList.addAll(list)
-        tickerAdapter.notifyDataSetChanged()
+        newsAdapter.notifyDataSetChanged()
     }
 
 

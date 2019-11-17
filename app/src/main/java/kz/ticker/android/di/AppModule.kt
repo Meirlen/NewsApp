@@ -6,7 +6,7 @@ import com.example.domain.interactor.GetCurrenciesUseCase
 
 import com.example.domain.repository.*
 
-import kz.ticker.android.ui.TicketViewModel
+import kz.ticker.android.ui.NewsViewModel
 
 import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -25,7 +25,7 @@ val archModule = module {
         module("viewModel") {
 
             viewModel {
-                TicketViewModel(get())
+                NewsViewModel(get())
             }
 
         }

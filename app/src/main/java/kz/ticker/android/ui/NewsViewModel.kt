@@ -7,24 +7,24 @@ import com.example.gateway.entity.*
 import kz.ticker.android.vo.Resource
 
 
-open class TicketViewModel(
+open class NewsViewModel(
     private val getCurrenciesUseCase: GetCurrenciesUseCase
 ) : ViewModel() {
 
 
-    var currencyLiveData: MutableLiveData<Resource<List<Currency>>> = MutableLiveData()
+    var articleLiveData: MutableLiveData<Resource<List<Article>>> = MutableLiveData()
 
 
     fun getCurrencies() {
 
-        currencyLiveData.value = Resource.loading(null)
+        articleLiveData.value = Resource.loading(null)
         getCurrenciesUseCase.execute(
             { currencies ->
 
-                currencyLiveData.value = Resource.success(currencies)
+                articleLiveData.value = Resource.success(currencies)
             },
             {
-                currencyLiveData.value = Resource.error(error = it)
+                articleLiveData.value = Resource.error(error = it)
 
             }, GetCurrenciesUseCase.Params("1")
         )

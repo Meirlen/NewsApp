@@ -1,4 +1,4 @@
-package kz.ticker.android.ui.ticket
+package kz.ticker.android.ui.news
 
 import android.content.Context
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_header.view.*
 import kz.ticker.android.R
 
 
-class TickerHeaderItem @JvmOverloads constructor(
+class HeaderItem @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 

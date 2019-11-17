@@ -1,19 +1,18 @@
 package kz.ticker.android.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kz.ticker.android.R
 
 
-class CurrencyFragment : androidx.fragment.app.Fragment() {
+class DetailFragment : androidx.fragment.app.Fragment() {
 
     companion object {
 
-        fun newInstance(): CurrencyFragment {
-            return CurrencyFragment()
+        fun newInstance(): DetailFragment {
+            return DetailFragment()
         }
     }
 

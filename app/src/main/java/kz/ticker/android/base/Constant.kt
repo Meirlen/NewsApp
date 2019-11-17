@@ -5,7 +5,7 @@ object Constant {
     /**
      * Endpoint
      */
-    var BASE_URL: String = "https://api.coinmarketcap.com"
+    var BASE_URL: String = "http://newsapi.org/"
 
 
     /**

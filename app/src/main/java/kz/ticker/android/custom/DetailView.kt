@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
-import com.example.gateway.entity.Currency
-import kotlinx.android.synthetic.main.view_currency.view.*
+import com.example.gateway.entity.Article
 import kz.ticker.android.R
-import kz.ticker.android.ext.showPrice
 
 
-class CurrencyView @JvmOverloads constructor(
+class DetailView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
@@ -22,7 +20,7 @@ class CurrencyView @JvmOverloads constructor(
         View.inflate(context, R.layout.view_currency, this)
     }
 
-    fun setData(currency: Currency) {
+    fun setData(article: Article) {
 
 
     }

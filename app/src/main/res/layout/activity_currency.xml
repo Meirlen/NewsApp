@@ -12,7 +12,7 @@
     </kz.ticker.android.custom.CenteredTitleToolbar>
 
 
-    <kz.ticker.android.custom.CurrencyView
+    <kz.ticker.android.custom.DetailView
         android:id="@+id/currencyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

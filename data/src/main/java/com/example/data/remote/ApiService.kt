@@ -10,8 +10,8 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @GET("/v1/ticker/")
-    fun getCurrencies(): Single<Response<List<Currency>>>
+    @GET("/v2/top-headlines?country=us&pageSize=2&page=1&apiKey=d4c4edff327c4fce883a5364f8b20f82")
+    fun getArticles(): Single<Response<NewsResponse>>
 
 
 }
