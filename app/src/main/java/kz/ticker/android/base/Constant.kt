@@ -22,8 +22,9 @@ object Constant {
     const val WRITE_TIMEOUT = (60 * 1000).toLong()
 
 
-    const val DEFAULT_PER_PAGE_COUNT = 10
+    const val DEFAULT_PER_PAGE_COUNT = "20"
 
 
+    const val PLACEHOLDER_IMG_URL = "http://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder-350x350.png"
 
 }
