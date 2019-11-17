@@ -1,7 +1,8 @@
 # 
 
-Юнит тест для use case :
-https://github.com/Meirlen/TickerApp/blob/master/domain/src/test/java/com/example/domain/interactor/GetCurrenciesUseCaseTest.java
+Пример юнит теста для бизнесс логики :
+https://github.com/Meirlen/NewsApp/blob/master/domain/src/test/java/com/example/domain/interactor/GetAriclesUseCaseTest.java
+
 
 - Kotlin
 - Clean Architecture (data,domain,presentation)
