@@ -3,6 +3,8 @@
 Пример юнит теста для бизнесс логики :
 https://github.com/Meirlen/NewsApp/blob/master/domain/src/test/java/com/example/domain/interactor/GetAriclesUseCaseTest.java
 
+ToDo list : https://trello.com/b/SqBYsJRQ/mobisapps
+
 
 - Kotlin
 - Clean Architecture (data,domain,presentation)
