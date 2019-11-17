@@ -25,19 +25,10 @@ public class GetAriclesUseCaseTest {
 
     @Test
     public void shouldDelegateCallToRepositoryFromRemote() {
-        GetAriclesUseCase.Params params = new GetAriclesUseCase.Params();
-        params.setFromRemote(true);
+        GetAriclesUseCase.Params params = new GetAriclesUseCase.Params("us","20","xxx",20);
         getAriclesUseCase.buildUseCaseSingle(params);
-        Mockito.verify(tickerRepository).getArticles();
-
+        Mockito.verify(tickerRepository).getArticles(params);
     }
 
-    @Test
-    public void shouldDelegateCallToRepositoryFromLocal() {
-        GetAriclesUseCase.Params params = new GetAriclesUseCase.Params();
-        params.setFromRemote(false);
-        getAriclesUseCase.buildUseCaseSingle(params);
-        Mockito.verify(tickerRepository).getCurrenciesFromDb();
 
-    }
 }
