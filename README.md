@@ -3,7 +3,6 @@
 Юнит тест для use case :
 https://github.com/Meirlen/TickerApp/blob/master/domain/src/test/java/com/example/domain/interactor/GetCurrenciesUseCaseTest.java
 
-- Customview , Canvas
 - Kotlin
 - Clean Architecture (data,domain,presentation)
 - MVVM(presentation layer)
@@ -12,6 +11,6 @@ https://github.com/Meirlen/TickerApp/blob/master/domain/src/test/java/com/exampl
 - Arch Components (ViewModel,LiveData)
 
 
-<img src="https://github.com/Meirlen/TickerApp/blob/master/screenshots/page_two.jpg" alt="alt text" width="250" height="400r">
-<img src="https://github.com/Meirlen/TickerApp/blob/master/screenshots/page_one.jpg" alt="alt text" width="250" height="400r">
+<img src="https://github.com/Meirlen/NewsApp/blob/master/screenshots/screen_one.jpg" alt="alt text" width="250" height="400r">
+<img src="https://github.com/Meirlen/NewsApp/blob/master/screenshots/screen_two.jpg" alt="alt text" width="250" height="400r">
 
